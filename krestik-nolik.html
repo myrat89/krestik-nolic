@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<mata charset="utf-8">
+	<title>игра крестик нолик</title>
+	<style type="text/css">
+		.box_heder_game{
+			width:400px; height:300px; 
+			display: inline-block; position:relative; left:50%;
+			margin-left:-200px; top:40px; opacity: 0; transition:opacity 0.5s;
+			background:linear-gradient(#CD003A, #68001D); box-shadow: 1px 1px 2px #000000;
+			border-radius: 4px;
+		}
+		.box_game{
+			width:117px; height:87px; border:1px solid #000000;
+			display: inline-block; position:relative; left:20px; top:12px;
+			cursor:pointer; font-size: 70px; background:linear-gradient(#E4E4E4, #C7C7C7);
+			box-shadow: 0px 0px 2px #000000; text-align: center; box-sizing: border-box;
+			vertical-align: top; margin-top: 5px;
+		}
+		.box_game:hover {
+			background:linear-gradient(#346BBE, #2A579A); 
+		}
+		.box_account_management {
+			position:relative;
+			width:450px; height:300px; border:1px solid #000000; top:30px;
+			display: block; left:50%; margin-left:-225px;
+			
+		}
+		.text_heder_resylt{
+			width:100%; height:45px; text-align: center; font-size: 22px;
+			box-sizing: border-box; padding-top: 10px;
+		}
+		.text_heder_user_1, .text_heder_user_2{
+			height:30px; font-size: 18px; box-sizing: border-box; 
+			margin-top: 5px; margin-left:20px;
+		}
+		button {
+			margin-left: 10px; padding:5px 10px; cursor: pointer;
+			font-size: 16px;
+		}
+		#krest{color:#F92472; transition:0.5s;} #nol {color:green; transition:0.5s;}
+		#krest:hover{background-color:#F92472; color:#ffffff;} #nol:hover{background-color:green; color:#ffffff;} 
+		#restart:hover{background-color:#000000; color:#ffffff; transition:0.5s;}
+ 		.text{
+			width:455px; height:45px; font-size: 19px; position:relative;
+			margin-left: 100px;
+		}
+		#user_1{color:#F92472;} #user_2{color:green; }
+		
+	</style>
+</head>
+<body>
+		<div class="box_account_management">
+			<div class="text_heder_resylt">Счетчик резултата игры</div>
+			<div class="text_heder_user_1">Игрок 1 крестик счет <span id="user_1">0</span></div>
+			<div class="text_heder_user_2">Игрок 2 нолик счет <span id="user_2">0</span></div>
+			<div class="text">Для начало игры выберите ход</div>
+			<button id="krest">Ход Крестика</button> <button id="nol">Ход Нолика</button> <button id="restart">Начать с начало</button>
+		</div>
+
+
+
+		<div class="box_heder_game">
+			<div class="box_game"></div>
+			<div class="box_game"></div>
+			<div class="box_game"></div>
+			<div class="box_game"></div>
+			<div class="box_game"></div>
+			<div class="box_game"></div>
+			<div class="box_game"></div>
+			<div class="box_game"></div>
+			<div class="box_game"></div>
+		</div>
+		
+
+
+
+		<script type="text/javascript">
+			//games
+			let x = 0;  let y = 0; let xx = 0; let oo = 0; // счетчики 
+			let box_g = document.getElementsByClassName("box_heder_game")[0];
+			let but_x = document.getElementById("krest");
+			let span_krest = document.getElementById("user_1");
+			let span_nyll = document.getElementById("user_2");
+			but_x.addEventListener("click", functkrest);
+			function functkrest() {
+				x = 1;
+				box_g.style.opacity = "1";
+			}
+			let but_o = document.getElementById("nol");
+			but_o.addEventListener("click", functnol);
+			function  functnol() {
+				x = 2;
+				box_g.style.opacity = "1";
+			}
+			
+			 let box_games = document.getElementsByClassName("box_game"); 
+			 for(let i = 0; i < box_games.length; i++)
+				box_games[i].addEventListener("click", functbox_games); 
+				
+				function functbox_games() {
+				y++;
+								
+				  if ( x == 1 ) {
+					if ( y == 1 ) {
+						this.innerHTML = "x";
+						this.style.color = "#F92472";
+					}
+					if ( y == 2 ){
+						this.innerHTML = "o";
+						this.style.color = "green";
+						y = 0;
+					}
+				 }
+				 else if ( x == 2 ) {
+					if ( y == 1 ) {
+						this.innerHTML = "o";
+						this.style.color = "green";
+					}
+					if ( y == 2 ){
+						this.innerHTML = "x";
+						this.style.color = "#F92472";
+						y = 0;
+					}
+				}	
+					
+				
+				
+				}
+				
+				/*условия игры*/
+				let boxs = document.getElementsByClassName("box_game");
+				for(g = 0; g < boxs.length; g++)
+				boxs[g].addEventListener("click", functbox_game);
+				function functbox_game() {
+					if (boxs[0].innerHTML == "x"){
+						if (boxs[1].innerHTML == "x"){
+							if(boxs[2].innerHTML == "x") { 
+								alert("Победил ход крестик");
+								xx++;
+								span_krest.innerHTML = xx;
+								for (zet = 0; zet < boxs.length; zet++)
+									boxs[zet].innerHTML = "";
+							}
+						}
+					}
+					if (boxs[0].innerHTML == "o"){
+						if (boxs[1].innerHTML == "o"){
+							if(boxs[2].innerHTML == "o") { 
+								alert("Победил ход нолик");
+								oo++;
+								span_nyll.innerHTML = oo;
+								for (zet = 0; zet < boxs.length; zet++)
+									boxs[zet].innerHTML = "";
+							}
+						}
+					}
+					if (boxs[3].innerHTML == "x"){
+						if (boxs[4].innerHTML == "x"){
+							if(boxs[5].innerHTML == "x") { 
+								alert("Победил ход крестик");
+								xx++;
+								span_krest.innerHTML = xx;
+								for (zet = 0; zet < boxs.length; zet++)
+									boxs[zet].innerHTML = "";
+							}
+						}
+					}
+					if (boxs[3].innerHTML == "o"){
+						if (boxs[4].innerHTML == "o"){
+							if(boxs[5].innerHTML == "o") { 
+								alert("Победил ход нолик");
+								oo++;
+								span_nyll.innerHTML = oo;
+								for (zet = 0; zet < boxs.length; zet++)
+									boxs[zet].innerHTML = "";
+							}
+						}
+					}
+					if (boxs[6].innerHTML == "x"){
+						if (boxs[7].innerHTML == "x"){
+							if(boxs[8].innerHTML == "x") { 
+								alert("Победил ход крестик");
+								xx++;
+								span_krest.innerHTML = xx;
+								for (zet = 0; zet < boxs.length; zet++)
+									boxs[zet].innerHTML = "";
+							}
+						}
+					}
+					if (boxs[6].innerHTML == "o"){
+						if (boxs[7].innerHTML == "o"){
+							if(boxs[8].innerHTML == "o") { 
+								alert("Победил ход нолик");
+								oo++;
+								span_nyll.innerHTML = oo;
+								for (zet = 0; zet < boxs.length; zet++)
+									boxs[zet].innerHTML = "";
+							}
+						}
+					}
+					if (boxs[0].innerHTML == "x"){
+						if (boxs[3].innerHTML == "x"){
+							if(boxs[6].innerHTML == "x") { 
+								alert("Победил ход крестик");
+								xx++;
+								span_krest.innerHTML = xx;
+								for (zet = 0; zet < boxs.length; zet++)
+									boxs[zet].innerHTML = "";
+							}
+						}
+					}
+					if (boxs[0].innerHTML == "o"){
+						if (boxs[3].innerHTML == "o"){
+							if(boxs[6].innerHTML == "o") { 
+								alert("Победил ход нолик");
+								oo++;
+								span_nyll.innerHTML = oo;
+								for (zet = 0; zet < boxs.length; zet++)
+									boxs[zet].innerHTML = "";
+							}
+						}
+					}
+					if (boxs[1].innerHTML == "x"){
+						if (boxs[4].innerHTML == "x"){
+							if(boxs[7].innerHTML == "x") { 
+								alert("Победил ход крестик");
+								xx++;
+								span_krest.innerHTML = xx;
+								for (zet = 0; zet < boxs.length; zet++)
+									boxs[zet].innerHTML = "";
+							}
+						}
+					}
+					if (boxs[1].innerHTML == "o"){
+						if (boxs[4].innerHTML == "o"){
+							if(boxs[7].innerHTML == "o") { 
+								alert("Победил ход нолик");
+								oo++;
+								span_nyll.innerHTML = oo;
+								for (zet = 0; zet < boxs.length; zet++)
+									boxs[zet].innerHTML = "";
+							}
+						}
+					}
+					if (boxs[2].innerHTML == "x"){
+						if (boxs[5].innerHTML == "x"){
+							if(boxs[8].innerHTML == "x") { 
+								alert("Победил ход крестик");
+								xx++;
+								span_krest.innerHTML = xx;
+								for (zet = 0; zet < boxs.length; zet++)
+									boxs[zet].innerHTML = "";
+							}
+						}
+					}
+					if (boxs[2].innerHTML == "o"){
+						if (boxs[5].innerHTML == "o"){
+							if(boxs[8].innerHTML == "o") { 
+								alert("Победил ход нолик");
+								oo++;
+								span_nyll.innerHTML = oo;
+								for (zet = 0; zet < boxs.length; zet++)
+									boxs[zet].innerHTML = "";
+							}
+						}
+					}
+					if (boxs[0].innerHTML == "x"){
+						if (boxs[4].innerHTML == "x"){
+							if(boxs[8].innerHTML == "x") { 
+								alert("Победил ход крестик");
+								xx++;
+								span_krest.innerHTML = xx;
+								for (zet = 0; zet < boxs.length; zet++)
+									boxs[zet].innerHTML = "";
+							}
+						}
+					}
+					if (boxs[0].innerHTML == "o"){
+						if (boxs[4].innerHTML == "o"){
+							if(boxs[8].innerHTML == "o") { 
+								alert("Победил ход нолик");
+								oo++;
+								span_nyll.innerHTML = oo;
+								for (zet = 0; zet < boxs.length; zet++)
+									boxs[zet].innerHTML = "";
+							}
+						}
+					}
+					if (boxs[2].innerHTML == "x"){
+						if (boxs[4].innerHTML == "x"){
+							if(boxs[6].innerHTML == "x") { 
+								alert("Победил ход крестик");
+								xx++;
+								span_krest.innerHTML = xx;
+								for (zet = 0; zet < boxs.length; zet++)
+									boxs[zet].innerHTML = "";
+							}
+						}
+					}
+					if (boxs[2].innerHTML == "o"){
+						if (boxs[4].innerHTML == "o"){
+							if(boxs[6].innerHTML == "o") { 
+								alert("Победил ход нолик");
+								oo++;
+								span_nyll.innerHTML = oo;
+								for (zet = 0; zet < boxs.length; zet++)
+									boxs[zet].innerHTML = "";
+							}
+						}
+					}
+							
+				}
+				
+				
+				let resetart = document.getElementById("restart").addEventListener("click", functrestart);
+				function functrestart() {
+					for (le = 0; le < boxs.length; le++) {
+						boxs[le].innerHTML = "";
+					}
+				}
+				
+				// программист Карабашев М.Д. 
+
+		</script>
+</body>
+</html>
